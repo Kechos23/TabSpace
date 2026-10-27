@@ -1,0 +1,13 @@
+import { performance } from 'node:perf_hooks';
+import { cpus, totalmem, release } from 'node:os';
+import { writeFileSync } from 'node:fs';
+import { entity, type Entity, type LiveTab } from '../packages/domain/model';
+import { SearchIndex } from '../packages/search/index';
+const spaces=Array.from({length:100},(_,i)=>entity('space',`Project ${i}`));
+const records:Entity[]=[...spaces];
+for(const [kind,count]of [['resource',10000],['note',1000],['task',5000]] as const)for(let i=0;i<count;i++)records.push(entity(kind,`${kind} ${i} Σημειώσεις`,{spaceId:spaces[i%100].id,text:`Evidence about project ${i%100}`,url:kind==='resource'?`https://example.org/document/${i}`:undefined}));
+const tabs:LiveTab[]=Array.from({length:300},(_,i)=>({id:i,windowId:1,index:i,groupId:-1,title:`Tab ${i}`,url:`https://example.org/${i}`,active:i===0,pinned:false,audible:false,discarded:false,autoDiscardable:true,muted:false}));
+const index=new SearchIndex();const began=performance.now();index.update(records,tabs);const build=performance.now()-began;
+const times:number[]=[];for(let i=0;i<100;i++){const start=performance.now();index.search(`project ${i%100}`);times.push(performance.now()-start);}times.sort((a,b)=>a-b);
+const result={date:'2026-10-03',hardware:{cpu:cpus()[0].model,logicalCores:cpus().length,memoryGiB:Number((totalmem()/1024**3).toFixed(1)),windows:release(),node:process.version},dataset:{spaces:100,resources:10000,notes:1000,tasks:5000,syntheticLiveTabs:300},indexBuildMs:Number(build.toFixed(2)),queryMedianMs:Number(times[50].toFixed(2)),queryP95Ms:Number(times[95].toFixed(2)),limitations:'Node/domain search only. Synthetic tabs are not 300 actual Chrome tabs. UI render, real IDB commit, native gesture latency and idle CPU are not measured here.'};
+writeFileSync('docs/VALIDATION_PERFORMANCE.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));

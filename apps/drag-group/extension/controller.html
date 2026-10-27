@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Drag Group controller</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <span class="label">WINDOWS · LOCAL</span>
+      <h1>Drag Group <small id="version"></small></h1>
+      <p>
+        Grab an ungrouped tab by its title and slightly overlap another tab.
+        Pause for 200 ms, then release when the matching tab outlines appear.
+        Their colour follows your Windows accent colour.
+      </p>
+      <p>
+        This pinned controller identifies this Chrome window. Keep it open. Drag
+        Group starts automatically in every normal window. Use the toolbar popup
+        to pause or resume all windows. Ordinary fast reordering stays
+        unchanged.
+      </p>
+      <div class="buttons">
+        <button id="enable">Enable everywhere</button
+        ><button id="disable" disabled>Pause everywhere</button
+        ><button id="fixtures">Open two local test tabs</button>
+      </div>
+      <p id="status" role="status">
+        Starting automatically. Install the Windows helper first using
+        the shared helper Setup.
+      </p>
+      <p id="result" role="status"></p>
+      <p id="gesture" role="status">
+        No drag detected yet. After Enable, this line shows the captured source,
+        target and cancellation reason.
+      </p>
+      <details open>
+        <summary>Recent gesture events (local, no titles or URLs)</summary>
+        <ol id="trace"></ol>
+      </details>
+      <details>
+        <summary>Supported gesture limits</summary>
+        <ul>
+          <li>
+            Normal horizontal tab strips; all tabs must be visible. No
+            incognito.
+          </li>
+          <li>One unpinned, ungrouped source and target in the same window.</li>
+          <li>
+            When Chrome moves a passed tab behind the dragged tab, it stops
+            being a target. Matching outlines mark the dragged tab and the next
+            eligible target. Overlap uses actual tab widths and preserves your
+            original grab offset.
+          </li>
+          <li>
+            Escape, focus loss, ambiguous identity, changed tab membership,
+            overflow and timeout cancel grouping.
+          </li>
+          <li>
+            Manual acceptance on other DPI/monitors/Chrome builds is still
+            required. No Linux helper yet.
+          </li>
+        </ul>
+      </details>
+      <p>Extension ID: <code id="identity"></code></p>
+      <p>
+        Only tab IDs, order and grouping state cross the local pipe. Page URLs
+        and content are never read. Disabling or closing this controller stops
+        its helper. While automatic operation is enabled, a closed controller is
+        recreated. Use Pause everywhere to stop all helpers.
+      </p>
+    </main>
+    <script type="module" src="controller.js"></script>
+  </body>
+</html>

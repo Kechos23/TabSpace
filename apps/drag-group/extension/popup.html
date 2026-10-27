@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="el">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Drag Group</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div><strong>Drag Group</strong><small id="version"></small></div>
+      <label class="switch"
+        ><input
+          type="checkbox"
+          id="enabled"
+          aria-label="Ενεργό σε όλα τα παράθυρα" /><span></span
+      ></label>
+    </header>
+    <p id="summary" role="status">Έλεγχος κατάστασης…</p>
+    <p id="current" role="status"></p>
+    <button id="details">Λεπτομέρειες παραθύρου</button>
+    <footer>
+      Αυτόματη λειτουργία σε όλα τα κανονικά παράθυρα αυτού του profile. Κράτησε
+      την pinned καρτέλα ανοιχτή.
+    </footer>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

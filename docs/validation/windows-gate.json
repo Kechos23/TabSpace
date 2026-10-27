@@ -1,0 +1,156 @@
+{
+  "version": "0.18.4",
+  "quick": false,
+  "results": [
+    {
+      "name": "typecheck",
+      "passed": true,
+      "milliseconds": 510
+    },
+    {
+      "name": "domain tests",
+      "passed": true,
+      "milliseconds": 11088
+    },
+    {
+      "name": "Drag Group JavaScript",
+      "passed": true,
+      "milliseconds": 207
+    },
+    {
+      "name": "build",
+      "passed": true,
+      "milliseconds": 690
+    },
+    {
+      "name": "manifest/CSP",
+      "passed": true,
+      "milliseconds": 1683
+    },
+    {
+      "name": "Drag Group native core",
+      "passed": true,
+      "milliseconds": 1485
+    },
+    {
+      "name": "Drag Group native protocol",
+      "passed": true,
+      "milliseconds": 706
+    },
+    {
+      "name": "import-coordination-test",
+      "passed": true,
+      "milliseconds": 2005
+    },
+    {
+      "name": "storage-maintenance-browser-test",
+      "passed": true,
+      "milliseconds": 1620
+    },
+    {
+      "name": "cloud-sync-browser-test",
+      "passed": true,
+      "milliseconds": 7723
+    },
+    {
+      "name": "review-fixes-browser-test",
+      "passed": true,
+      "milliseconds": 2115
+    },
+    {
+      "name": "browsing-lifecycle-test",
+      "passed": true,
+      "milliseconds": 12436
+    },
+    {
+      "name": "browsing-pwa-test",
+      "passed": true,
+      "milliseconds": 38204
+    },
+    {
+      "name": "session-browser-test",
+      "passed": true,
+      "milliseconds": 20235
+    },
+    {
+      "name": "notes-workspace-test",
+      "passed": true,
+      "milliseconds": 5170
+    },
+    {
+      "name": "resources-browser-test",
+      "passed": true,
+      "milliseconds": 9694
+    },
+    {
+      "name": "tasks-workspace-test",
+      "passed": true,
+      "milliseconds": 4950
+    },
+    {
+      "name": "performance-browser-test",
+      "passed": true,
+      "milliseconds": 9850
+    },
+    {
+      "name": "recovery-browser-test",
+      "passed": true,
+      "milliseconds": 3128
+    },
+    {
+      "name": "lock-space-test",
+      "passed": true,
+      "milliseconds": 11440
+    },
+    {
+      "name": "popup-browser-test",
+      "passed": true,
+      "milliseconds": 34870
+    },
+    {
+      "name": "space-details-browser-test",
+      "passed": true,
+      "milliseconds": 3349
+    },
+    {
+      "name": "sidebar-ui-test",
+      "passed": true,
+      "milliseconds": 10515
+    },
+    {
+      "name": "sidebar-space-drop-test",
+      "passed": true,
+      "milliseconds": 2930
+    },
+    {
+      "name": "copy-sidebar-test",
+      "passed": true,
+      "milliseconds": 19646
+    },
+    {
+      "name": "sidepanel-ui-test",
+      "passed": true,
+      "milliseconds": 3575
+    },
+    {
+      "name": "grouped-tabs-ui-test",
+      "passed": true,
+      "milliseconds": 3239
+    },
+    {
+      "name": "manager-icons-browser-test",
+      "passed": true,
+      "milliseconds": 6020
+    },
+    {
+      "name": "manager-lifecycle-browser-test",
+      "passed": true,
+      "milliseconds": 4396
+    },
+    {
+      "name": "drag-group-integration-browser-test",
+      "passed": true,
+      "milliseconds": 2299
+    }
+  ]
+}

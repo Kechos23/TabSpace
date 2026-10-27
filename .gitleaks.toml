@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Versioned Chrome public identity keys (validated as RSA public keys by build/publication checks), not API credentials"
+paths = ['''^apps/drag-group/public-key\.json$''', '''^apps/extension/manifest/public-key\.json$''']

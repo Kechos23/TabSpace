@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Drag Group",
+  "version": "0.1.21",
+  "minimum_chrome_version": "116",
+  "description": "Create real Chrome groups by dwelling over another tab. Requires the local Drag Group helper.",
+  "permissions": [
+    "nativeMessaging",
+    "tabGroups",
+    "storage"
+  ],
+  "incognito": "not_allowed",
+  "background": {
+    "service_worker": "worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Drag Group",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'"
+  }
+}

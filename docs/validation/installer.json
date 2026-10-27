@@ -1,0 +1,26 @@
+{
+  "installerVersion": "1.0.0",
+  "helperVersion": "0.1.21",
+  "passed": true,
+  "scope": "Real installer/uninstaller executable with compile-time sandbox registry key and workspace files; no real Chrome registration",
+  "checks": [
+    "Missing .NET blocks installation without changing registration",
+    "Fresh per-user install writes exact two-origin manifest and Unicode paths",
+    "Repair replaces a corrupted payload and preserves original rollback state",
+    "Installed helper passes all six native protocol checks, including both allowed origins and rejection cases",
+    "Repair and uninstall refuse a running helper without terminating it",
+    "Missing ownership state blocks uninstall before file removal",
+    "Clean uninstall removes only its registration and files, preserving unknown files",
+    "Portable migration requires confirmation; repair retains backup; uninstall restores it",
+    "Uninstall preserves a registration taken over by another installation",
+    "Failure after registry write rolls registration back to its prior value",
+    "Failed repair restores installed payload bytes, managed registration and rollback state",
+    "Missing previous manifest removes owned registration instead of restoring a dangling path",
+    "Personal Chrome registration remains unchanged throughout isolated acceptance"
+  ],
+  "manualLimits": [
+    "Clean-machine/VM and other Windows versions",
+    "SmartScreen and signing acceptance",
+    "Future version-to-version payload upgrade"
+  ]
+}

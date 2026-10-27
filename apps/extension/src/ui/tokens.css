@@ -1,0 +1,54 @@
+@import url("./palettes.css");
+:root {
+  --bg: var(--light-bg, #f7f9f8);
+  --surface: var(--light-surface, #fff);
+  --sidebar: var(--light-sidebar, #eff4f2);
+  --text: var(--light-text, #243b3c);
+  --muted: var(--light-muted, #637879);
+  --border: var(--light-border, #dce6e2);
+  --accent: var(--light-accent, #28796c);
+  --focus: var(--light-focus, #6f9bd5);
+  --tint: var(--light-tint, #e0eeea);
+  --hover: var(--light-hover, #edf3f0);
+  --danger: var(--light-danger, #a73a4a);
+  --error: var(--light-error, #fceff1);
+  --shadow: var(--light-shadow, #14352a05);
+  --primary: var(--light-primary, #28796c);
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --bg: var(--dark-bg, #142225);
+  --surface: var(--dark-surface, #1b2c2f);
+  --sidebar: var(--dark-sidebar, #18292c);
+  --text: var(--dark-text, #e2efec);
+  --muted: var(--dark-muted, #9bb0af);
+  --border: var(--dark-border, #2e4345);
+  --accent: var(--dark-accent, #70c6b3);
+  --focus: var(--dark-focus, #92b7ff);
+  --tint: var(--dark-tint, #25443f);
+  --hover: var(--dark-hover, #25373a);
+  --danger: var(--dark-danger, #f59aa4);
+  --error: var(--dark-error, #3b252d);
+  --shadow: var(--dark-shadow, #0001);
+  --primary: var(--dark-primary, #398c7e);
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg: var(--dark-bg, #142225);
+    --surface: var(--dark-surface, #1b2c2f);
+    --sidebar: var(--dark-sidebar, #18292c);
+    --text: var(--dark-text, #e2efec);
+    --muted: var(--dark-muted, #9bb0af);
+    --border: var(--dark-border, #2e4345);
+    --accent: var(--dark-accent, #70c6b3);
+    --focus: var(--dark-focus, #92b7ff);
+    --tint: var(--dark-tint, #25443f);
+    --hover: var(--dark-hover, #25373a);
+    --danger: var(--dark-danger, #f59aa4);
+    --error: var(--dark-error, #3b252d);
+    --shadow: var(--dark-shadow, #0001);
+    --primary: var(--dark-primary, #398c7e);
+    color-scheme: dark;
+  }
+}

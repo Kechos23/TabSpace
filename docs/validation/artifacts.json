@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-27T01:54:40.956Z",
+  "tabSpaceVersion": "0.18.4",
+  "dragGroupVersion": "0.1.21",
+  "installerVersion": "1.0.0",
+  "prerelease": false,
+  "validation": {
+    "checks": 30,
+    "passed": true
+  },
+  "installerChecks": 13,
+  "installedNativeProtocolChecks": 6,
+  "files": [
+    {
+      "name": "TabSpace-0.18.4.zip",
+      "bytes": 636008,
+      "sha256": "8ba14d9a54bbf7112aeb17e2ee4270e14bcf4362cf6318f836acf087f2d0b742"
+    },
+    {
+      "name": "DragGroup-0.1.21.zip",
+      "bytes": 95442,
+      "sha256": "2dd44462fb3a6a444d7f0efbac1385329e2bc32f00ef3dc31bfa009f8e186efd"
+    },
+    {
+      "name": "DragGroup-Helper-Setup-1.0.0.exe",
+      "bytes": 2403805,
+      "sha256": "09fa2ccaf90332cf477e6df5baf72a7713a61621c571b86370a365abbcf34b48"
+    }
+  ],
+  "releases": [
+    {
+      "tag": "tabspace-v0.18.4",
+      "title": "TabSpace 0.18.4",
+      "files": [
+        "TabSpace-0.18.4.zip",
+        "DragGroup-Helper-Setup-1.0.0.exe"
+      ],
+      "checksum": "TabSpace-SHA256SUMS.txt",
+      "notes": "docs/releases/tabspace-v0.18.4.md"
+    },
+    {
+      "tag": "drag-group-v0.1.21",
+      "title": "Drag Group 0.1.21",
+      "files": [
+        "DragGroup-0.1.21.zip",
+        "DragGroup-Helper-Setup-1.0.0.exe"
+      ],
+      "checksum": "DragGroup-SHA256SUMS.txt",
+      "notes": "docs/releases/drag-group-v0.1.21.md"
+    }
+  ]
+}

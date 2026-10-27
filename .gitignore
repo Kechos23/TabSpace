@@ -1,0 +1,26 @@
+node_modules/
+.cache/
+.internal/
+artifacts/
+dist/
+test-results/
+apps/native-helper/**/bin/
+apps/native-helper/**/obj/
+*.user
+*.pfx
+*.key
+*.pem
+.env
+.env.*
+!.env.example
+registration-backup.json
+**/com.tabspace.draggroup.json
+**/bin/
+**/obj/
+.vs/
+
+# Generated acceptance records; curated public evidence lives in docs/validation.
+docs/VALIDATION*.json
+docs/DRAG_GROUP_*.json
+docs/screenshots/
+docs/review/

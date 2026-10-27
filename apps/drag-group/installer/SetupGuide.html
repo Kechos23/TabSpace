@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  />
+  <title>Drag Group Helper · Setup guide</title>
+  <style>
+    html {
+      color-scheme: light dark;
+      font:
+        16px/1.65 system-ui,
+        sans-serif;
+    }
+    body {
+      max-width: 740px;
+      margin: 64px auto;
+      padding: 0 28px;
+    }
+    h1 {
+      line-height: 1.15;
+    }
+    small {
+      color: #52998a;
+    }
+    section {
+      border-top: 1px solid #7f8f8a55;
+      margin-top: 32px;
+      padding-top: 16px;
+    }
+    code {
+      background: #7f8f8a20;
+      padding: 3px 6px;
+      border-radius: 5px;
+    }
+    a {
+      color: #438fcb;
+    }
+    footer {
+      margin-top: 48px;
+      font-size: 13px;
+      opacity: 0.7;
+    }
+  </style>
+  <small>TABSPACE + DRAG GROUP</small>
+  <h1>Your helper is installed.</h1>
+  <p>
+    The helper adds drag-to-group to Chrome. TabSpace's organizer and
+    independent pinned manager work without it.
+  </p>
+  <section>
+    <h2>Connect your extension</h2>
+    <ol>
+      <li>
+        Open <strong>TabSpace → Settings → Drag Group</strong>, or the
+        standalone Drag Group popup.
+      </li>
+      <li>
+        Enable Drag Group and accept Chrome's helper permission if prompted.
+      </li>
+      <li>
+        Wait for <strong>Ready</strong>. Keep the pinned manager/controller
+        open.
+      </li>
+    </ol>
+    <p>
+      Use one active Drag Group edition at a time. Both editions use this single
+      helper installation. The installer does not install or enable a Chrome
+      extension.
+    </p>
+  </section>
+  <section>
+    <h2>Try grouping</h2>
+    <p>
+      Drag one unpinned, ungrouped tab over another in the same Chrome window.
+      Hold briefly until the paired outline appears, then release. Move back to
+      cancel.
+    </p>
+  </section>
+  <section>
+    <h2>Update, repair or remove</h2>
+    <p>
+      Pause Drag Group first, or close Chrome completely. Run the downloaded
+      Setup again to update or repair. To remove the helper, use
+      <strong>Windows Settings → Apps → Drag Group Helper → Uninstall</strong>.
+      Your Spaces, extensions and browser data remain untouched.
+    </p>
+    <p>
+      If Setup replaced an older portable registration, its path is saved for
+      uninstall. The old folder is kept. If its manifest still exists, uninstall
+      restores that registration; otherwise it removes only this helper's
+      registration. Another installation's registration is always left alone.
+    </p>
+  </section>
+  <section>
+    <h2>If the status is not Ready</h2>
+    <p>
+      Check that <strong>.NET 10 Desktop Runtime x64</strong> is installed,
+      pause the other Drag Group edition, reload the extension and check its
+      status. Setup verifies its files and Chrome registration; only Chrome can
+      confirm the live connection.
+    </p>
+    <p>
+      <a href="https://dotnet.microsoft.com/download/dotnet/10.0"
+        >Official Microsoft .NET download</a
+      >
+    </p>
+  </section>
+  <footer>
+    Designed by <strong>kechos</strong> · GPL-3.0-only · No Windows startup task
+    or service.
+  </footer>
+</html>

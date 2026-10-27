@@ -1,0 +1,55 @@
+{
+  "name": "tabspace",
+  "version": "0.18.4",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "description": "Local-first Chrome project organizer",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs",
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "build": "npm run typecheck && node scripts/build.mjs",
+    "test": "vitest run --config vitest.config.ts",
+    "test:browser": "node scripts/browser-test.mjs",
+    "test:sessions": "node scripts/session-browser-test.mjs",
+    "test:popup": "node scripts/popup-browser-test.mjs",
+    "test:home": "node scripts/home-browser-test.mjs",
+    "test:trash": "node scripts/trash-browser-test.mjs",
+    "test:collections": "node scripts/collections-browser-test.mjs",
+    "test:performance": "node scripts/performance-browser-test.mjs",
+    "test:recovery": "node scripts/recovery-browser-test.mjs",
+    "test:sidebar": "node scripts/sidebar-ui-test.mjs",
+    "audit:manifest": "node scripts/audit.mjs",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.14.13",
+    "@tiptap/extension-task-item": "^3.31.4",
+    "@tiptap/extension-task-list": "^3.31.4",
+    "@tiptap/react": "^3.31.4",
+    "@tiptap/starter-kit": "^3.31.4",
+    "dexie": "^4.4.6",
+    "fflate": "^0.8.3",
+    "minisearch": "^7.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/chrome": "^0.3.4",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "fake-indexeddb": "^6.2.5",
+    "prettier": "^3.9.9",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  }
+}

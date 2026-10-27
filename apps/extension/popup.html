@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TabSpace quick actions</title>
+    <style>
+      html {
+        width: 380px;
+        min-height: 340px;
+        color-scheme: light dark;
+      }
+      body {
+        margin: 0;
+        min-height: 340px;
+        background: #f7f9f8;
+        color: #243b3c;
+        font:
+          14px/1.55 "Segoe UI",
+          sans-serif;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #142225;
+          color: #e2efec;
+        }
+      }
+      .popup-shell {
+        box-sizing: border-box;
+        width: 380px;
+        min-height: 340px;
+        padding: 16px 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <main class="popup-shell" aria-busy="true">
+        <strong>TabSpace</strong>
+        <p role="status">Opening quick actions…</p>
+      </main>
+    </div>
+    <script type="module" src="/src/popup.tsx"></script>
+  </body>
+</html>

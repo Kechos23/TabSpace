@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible TabSpace or Drag Group problem
+body:
+  - type: dropdown
+    id: product
+    attributes:
+      label: Product
+      options: [TabSpace, Standalone Drag Group, Windows helper / Setup]
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Product, Chrome and OS versions
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and observed behavior
+      description: Include expected behavior and whether sync or the helper is enabled. Redact credentials, browsing data and account details.
+    validations:
+      required: true
