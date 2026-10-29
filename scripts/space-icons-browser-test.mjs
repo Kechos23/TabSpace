@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve } from "node:path";
 import assert from "node:assert/strict";
 import { entity } from "../packages/domain/model.ts";

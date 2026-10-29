@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 // Diagnostic build only: production sources, dist and the personal Chrome profile are untouched.
 import { build as bundle } from "esbuild";
 import { build as viteBuild } from "vite";

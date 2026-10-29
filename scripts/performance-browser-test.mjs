@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve } from "node:path";
 import { writeFile } from "node:fs/promises";
 import assert from "node:assert/strict";

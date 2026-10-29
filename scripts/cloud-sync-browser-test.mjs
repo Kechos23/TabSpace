@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve } from "node:path";
 import { createServer } from "node:http";
 import { cp, readFile, writeFile } from "node:fs/promises";

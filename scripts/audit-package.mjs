@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { readFile, writeFile, mkdir, access } from "node:fs/promises";
 import { resolve, relative } from "node:path";
 import { createHash } from "node:crypto";

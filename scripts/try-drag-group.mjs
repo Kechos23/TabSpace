@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve } from "node:path";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 const root = resolve(import.meta.dirname, "..");

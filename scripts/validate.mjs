@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { mkdir, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { spawn } from "node:child_process";

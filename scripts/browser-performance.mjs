@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { build } from "esbuild";
 import { resolve } from "node:path";
 import { mkdir, writeFile, readFile } from "node:fs/promises";

@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve, dirname } from "node:path";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { unzipSync } from "fflate";

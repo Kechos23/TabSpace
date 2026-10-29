@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { resolve } from "node:path";
 import { mkdir } from "node:fs/promises";
 import { entity } from "../packages/domain/model.ts";

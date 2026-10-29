@@ -24,7 +24,13 @@
     "test:recovery": "node scripts/recovery-browser-test.mjs",
     "test:sidebar": "node scripts/sidebar-ui-test.mjs",
     "audit:manifest": "node scripts/audit.mjs",
-    "package": "node scripts/package.mjs"
+    "package": "node scripts/package.mjs",
+    "predev": "node scripts/development-maintenance.mjs",
+    "prebuild": "node scripts/development-maintenance.mjs",
+    "pretest": "node scripts/development-maintenance.mjs",
+    "cleanup:dev": "node scripts/development-cleanup.mjs",
+    "cleanup:dev:apply": "node scripts/development-cleanup.mjs --apply",
+    "test:cleanup": "node --test tests/development-cleanup.test.mjs"
   },
   "dependencies": {
     "@tanstack/react-virtual": "^3.14.13",

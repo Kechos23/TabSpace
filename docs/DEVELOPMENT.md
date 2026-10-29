@@ -30,3 +30,15 @@ After successful validation, `node scripts/prepare-public-release.mjs --stable` 
 `node scripts/capture-showcase.mjs` captures current product images with synthetic data and a disposable profile. See [test plan](TEST_PLAN.md), [architecture](ARCHITECTURE.md) and [release layout](REPOSITORY_LAYOUT.md).
 
 No build/test step should modify a personal Chrome profile. Never commit generated builds, caches, credentials, registrations or real browsing exports.
+
+## Automatic development cleanup
+
+Development/build/test entry points and direct browser-test scripts run best-effort local maintenance, at most once per hour. It removes only allowlisted timestamped test profiles, extracted package fixtures and cloud-sync test build copies older than 48 hours, preserving the two newest folders per test family. Recently modified contents, running-process references, installed Chrome extension paths, links and nested repositories are protected. Unknown directories are never selected.
+
+This is a development operation, not an extension feature or scheduled Windows task. It runs again when development resumes. The extension's Chrome-profile data, `dist`, dependencies, SDK/browser/compiler caches, release packages, validation logs and both source repositories are not cleanup targets. Public and private checkouts maintain their own state; linked caches are not traversed.
+
+- `npm run cleanup:dev` previews eligible folders without deleting them.
+- `npm run cleanup:dev:apply` runs cleanup immediately, keeping the same age and retention safeguards.
+- `npm run test:cleanup` checks deletion and preservation behavior using disposable fixtures.
+
+The latest local report is `artifacts/.development-cleanup/last-report.json`. Failed deletions are reported and retried on a later run; maintenance failures do not prevent development commands from running. No reports or generated profiles belong in Git.

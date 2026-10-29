@@ -1,3 +1,4 @@
+import "./development-maintenance.mjs";
 import { build as viteBuild } from "vite";
 import { build as bundle } from "esbuild";
 import { mkdir, readFile, writeFile, cp, access } from "node:fs/promises";
