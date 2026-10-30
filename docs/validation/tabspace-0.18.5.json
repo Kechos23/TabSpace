@@ -1,0 +1,182 @@
+{
+  "date": "2026-10-30T21:58:23.212Z",
+  "version": "0.18.5",
+  "passed": true,
+  "windowsGate": {
+    "checks": 30,
+    "results": [
+      {
+        "name": "typecheck",
+        "passed": true,
+        "milliseconds": 479
+      },
+      {
+        "name": "domain tests",
+        "passed": true,
+        "milliseconds": 11497
+      },
+      {
+        "name": "Drag Group JavaScript",
+        "passed": true,
+        "milliseconds": 204
+      },
+      {
+        "name": "build",
+        "passed": true,
+        "milliseconds": 678
+      },
+      {
+        "name": "manifest/CSP",
+        "passed": true,
+        "milliseconds": 1631
+      },
+      {
+        "name": "Drag Group native core",
+        "passed": true,
+        "milliseconds": 4428
+      },
+      {
+        "name": "Drag Group native protocol",
+        "passed": true,
+        "milliseconds": 794
+      },
+      {
+        "name": "import-coordination-test",
+        "passed": true,
+        "milliseconds": 2070
+      },
+      {
+        "name": "storage-maintenance-browser-test",
+        "passed": true,
+        "milliseconds": 1579
+      },
+      {
+        "name": "cloud-sync-browser-test",
+        "passed": true,
+        "milliseconds": 7407
+      },
+      {
+        "name": "review-fixes-browser-test",
+        "passed": true,
+        "milliseconds": 2007
+      },
+      {
+        "name": "browsing-lifecycle-test",
+        "passed": true,
+        "milliseconds": 11533
+      },
+      {
+        "name": "browsing-pwa-test",
+        "passed": true,
+        "milliseconds": 38503
+      },
+      {
+        "name": "session-browser-test",
+        "passed": true,
+        "milliseconds": 18564
+      },
+      {
+        "name": "notes-workspace-test",
+        "passed": true,
+        "milliseconds": 4333
+      },
+      {
+        "name": "resources-browser-test",
+        "passed": true,
+        "milliseconds": 9629
+      },
+      {
+        "name": "tasks-workspace-test",
+        "passed": true,
+        "milliseconds": 4795
+      },
+      {
+        "name": "performance-browser-test",
+        "passed": true,
+        "milliseconds": 9878
+      },
+      {
+        "name": "recovery-browser-test",
+        "passed": true,
+        "milliseconds": 3057
+      },
+      {
+        "name": "lock-space-test",
+        "passed": true,
+        "milliseconds": 10598
+      },
+      {
+        "name": "popup-browser-test",
+        "passed": true,
+        "milliseconds": 43736
+      },
+      {
+        "name": "space-details-browser-test",
+        "passed": true,
+        "milliseconds": 3322
+      },
+      {
+        "name": "sidebar-ui-test",
+        "passed": true,
+        "milliseconds": 10428
+      },
+      {
+        "name": "sidebar-space-drop-test",
+        "passed": true,
+        "milliseconds": 3178
+      },
+      {
+        "name": "copy-sidebar-test",
+        "passed": true,
+        "milliseconds": 18622
+      },
+      {
+        "name": "sidepanel-ui-test",
+        "passed": true,
+        "milliseconds": 3483
+      },
+      {
+        "name": "grouped-tabs-ui-test",
+        "passed": true,
+        "milliseconds": 3223
+      },
+      {
+        "name": "manager-icons-browser-test",
+        "passed": true,
+        "milliseconds": 5746
+      },
+      {
+        "name": "manager-lifecycle-browser-test",
+        "passed": true,
+        "milliseconds": 4133
+      },
+      {
+        "name": "drag-group-integration-browser-test",
+        "passed": true,
+        "milliseconds": 2322
+      }
+    ]
+  },
+  "unitTests": 145,
+  "developmentCleanupTests": 7,
+  "popupRegression": "In-place Unsaved promotion, unchanged document markers and tab identities, immediate orange manager favicon, duplicate URLs, locks, collection, native groups, source-window isolation and later reopening",
+  "unchangedHelper": {
+    "version": "1.0.0",
+    "native": "0.1.21",
+    "sha256": "09fa2ccaf90332cf477e6df5baf72a7713a61621c571b86370a365abbcf34b48",
+    "validation": "installer.json"
+  },
+  "files": [
+    {
+      "name": "TabSpace-0.18.5.zip",
+      "bytes": 636881,
+      "sha256": "868de85be061971a9e2b5ecaf90db72b897323f546de997a42c809f868e646be"
+    },
+    {
+      "name": "DragGroup-Helper-Setup-1.0.0.exe",
+      "bytes": 2403805,
+      "sha256": "09fa2ccaf90332cf477e6df5baf72a7713a61621c571b86370a365abbcf34b48"
+    }
+  ],
+  "manualLimits": "Isolated Chromium fixtures do not replace installed-Chrome toolbar or physical native-mouse acceptance."
+}

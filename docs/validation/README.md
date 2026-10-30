@@ -1,5 +1,11 @@
 # Release validation
 
+## TabSpace 0.18.5
+
+[Patch validation and checksums](tabspace-0.18.5.json) cover the new in-place window save, unchanged live documents and immediate manager favicon, with 145 unit tests and the full Windows gate. The shared installer is reused byte-for-byte from 0.18.4; its original acceptance evidence remains linked below.
+
+## Initial public snapshot
+
 The first public source snapshot is checked as a complete build, independently of earlier development reports. Generated test profiles/logs remain outside Git.
 
 - [Windows gate](windows-gate.json): 30 automated checks, including 140 unit tests, JavaScript lifecycle/policy checks, native policy/protocol, manager/popup/panel, browsing/restore, sync and import regressions.

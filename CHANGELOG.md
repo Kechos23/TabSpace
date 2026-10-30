@@ -1,5 +1,13 @@
 # Changelog
 
+## TabSpace 0.18.5 — save the current window in place
+
+- Save window as Space immediately promotes the current Unsaved Space and binds the existing window without reloading, recreating or moving its tabs.
+- Update the pinned manager favicon to the selected Space color immediately after the save commits.
+- Preserve existing Space contents, duplicate-tab identities, native groups and the selected lock/collection options.
+- Add safe automatic cleanup for old development fixtures; this does not run inside the extension.
+- Keep Drag Group 0.1.21 and shared helper Setup 1.0.0 unchanged.
+
 ## Initial public release
 
 This repository starts from a reviewed product snapshot. The release tags share the clean initial source commit.

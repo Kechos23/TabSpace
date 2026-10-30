@@ -4,7 +4,7 @@
 
 A local-first workspace for Chrome. Bring your tabs, useful links, notes and tasks together in Spaces, and return to each project with its browsing context ready.
 
-[Download TabSpace](https://github.com/Kechos23/TabSpace/releases/tag/tabspace-v0.18.4) · [Download Drag Group](https://github.com/Kechos23/TabSpace/releases/tag/drag-group-v0.1.21) · [Gitea mirror](https://gitea.kechos.com/Kechos23/TabSpace) · [Installation guide](docs/USER_GUIDE_EN.md) · [Οδηγός στα ελληνικά](docs/USER_GUIDE_EL.md)
+[Download TabSpace](https://github.com/Kechos23/TabSpace/releases/tag/tabspace-v0.18.5) · [Download Drag Group](https://github.com/Kechos23/TabSpace/releases/tag/drag-group-v0.1.21) · [Gitea mirror](https://gitea.kechos.com/Kechos23/TabSpace) · [Installation guide](docs/USER_GUIDE_EN.md) · [Οδηγός στα ελληνικά](docs/USER_GUIDE_EL.md)
 
 ![TabSpace Home showing Spaces and Collections with sample project data](docs/images/overview.png)
 
@@ -44,7 +44,7 @@ The helper requires **Windows x64 and .NET 10 Windows Desktop Runtime**. In TabS
 | **Shared Windows helper Setup** | You want to enable Drag Group inside TabSpace or use the managed helper with standalone Drag Group. |
 | **Standalone Drag Group** | You want only drag-to-group. Install its extension ZIP and the shared helper Setup. |
 
-1. Download `TabSpace-0.18.4.zip` and extract it into a permanent folder.
+1. Download `TabSpace-0.18.5.zip` and extract it into a permanent folder.
 2. Open `chrome://extensions`, enable **Developer mode**, choose **Load unpacked** and select the extension folder containing `manifest.json`.
 3. Open the toolbar popup and choose **Open manager** or **Open side panel**.
 
@@ -73,7 +73,7 @@ There is no analytics or developer-operated collection service. Organizer data s
 
 The repository contains TabSpace, standalone Drag Group and their shared helper. See [development](docs/DEVELOPMENT.md), [architecture](docs/ARCHITECTURE.md), [capability and validation map](docs/REQUIREMENTS_MATRIX.md) and [repository layout](docs/REPOSITORY_LAYOUT.md).
 
-Current versions: **TabSpace 0.18.4**, **Drag Group 0.1.21** and **shared helper Setup 1.0.0**. See [release notes](docs/releases/tabspace-v0.18.4.md), [validation](docs/validation/README.md) and [contributing](CONTRIBUTING.md).
+Current versions: **TabSpace 0.18.5**, **Drag Group 0.1.21** and **shared helper Setup 1.0.0**. See [release notes](docs/releases/tabspace-v0.18.5.md), [validation](docs/validation/README.md) and [contributing](CONTRIBUTING.md).
 
 For a bug report, include the product/version, Chrome and Windows versions, reproduction steps and whether the helper or sync is enabled. Redact account details, browsing data, credentials and backups before sharing diagnostics.
 
