@@ -208,7 +208,7 @@ function Popup() {
           onSubmit={(event) => {
             event.preventDefault();
             void run(async () => {
-              await client.browser("saveWindowSpace", {
+              const saved = await client.browser("saveWindowSpace", {
                 windowId: state!.windowId,
                 spaceId: windowSave.id,
                 name: windowSave.name.trim(),
@@ -217,7 +217,14 @@ function Popup() {
                 collectionId: windowSave.collection || undefined,
               });
               await refresh();
-              setSpaceId(windowSave.id);
+              setSpaceId(
+                saved &&
+                  typeof saved === "object" &&
+                  "spaceId" in saved &&
+                  typeof saved.spaceId === "string"
+                  ? saved.spaceId
+                  : windowSave.id,
+              );
               setWindowSave(undefined);
               setNotice(`Saved as ${windowSave.name.trim()}.`);
             });

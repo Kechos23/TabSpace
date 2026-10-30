@@ -273,7 +273,11 @@ function notifyViews(entities?: State["entities"]) {
     .sendMessage({ type: "tabspace:changed", entities })
     .catch(() => undefined);
 }
-const cloudSync = createCloudSync(enqueue, () => notifyViews(), () => syncSessions());
+const cloudSync = createCloudSync(
+  enqueue,
+  () => notifyViews(),
+  () => syncSessions(),
+);
 const dragGroup = createDragGroupIntegration(
   enqueue,
   notifyViews,
@@ -752,6 +756,7 @@ async function handle(raw: unknown, sourceWindowId?: number) {
       });
       const journal = (await repo.db.journal.get(m.commandId))!;
       await repo.db.journal.put({ ...journal, state: "executing" });
+      let operationResult: true | { spaceId: string } = true;
       try {
         if (m.action === "saveWindowSpace") {
           if (
@@ -760,7 +765,7 @@ async function handle(raw: unknown, sourceWindowId?: number) {
             !m.payload.name?.trim()
           )
             throw new Error("Choose a window and a Space name.");
-          await saveWindowAsSpace(
+          const savedSpaceId = await saveWindowAsSpace(
             m.payload.windowId,
             m.payload.spaceId,
             m.payload.name,
@@ -768,6 +773,7 @@ async function handle(raw: unknown, sourceWindowId?: number) {
             m.payload.color,
             m.payload.collectionId,
           );
+          operationResult = { spaceId: savedSpaceId };
         } else if (m.action === "setTabLock")
           await setSpaceTabLock(
             m.payload.spaceId!,
@@ -841,7 +847,7 @@ async function handle(raw: unknown, sourceWindowId?: number) {
         await maintainBrowsing();
         await repo.db.journal.put({ ...journal, state: "applied" });
         notifyViews();
-        return true;
+        return operationResult;
       } catch {
         await repo.db.journal.put({
           ...journal,

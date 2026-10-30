@@ -157,11 +157,9 @@ try {
   await popup.evaluate(() => {
     document.documentElement.dataset.theme = "light";
   });
-  await popup
-    .locator(".popup-shell")
-    .screenshot({
-      path: resolve(root, "artifacts/popup-cloud-sync-light.png"),
-    });
+  await popup.locator(".popup-shell").screenshot({
+    path: resolve(root, "artifacts/popup-cloud-sync-light.png"),
+  });
   assert(
     (await popup.evaluate(() => window.cloudFixture.calls)).every(
       (type) => type === "cloudSyncSummary",
@@ -356,7 +354,7 @@ try {
   await popup
     .getByRole("button", { name: "Save window as Space", exact: true })
     .click();
-  await popup.getByLabel("Space name").fill("Window copy");
+  await popup.getByLabel("Space name").fill("Window saved in place");
   await popup.getByRole("button", { name: "Space color", exact: true }).click();
   await expect(popup.getByRole("menuitemradio")).toHaveCount(9);
   const swatches = await popup
@@ -386,6 +384,53 @@ try {
   await popup.locator(".popup-shell").screenshot({
     path: resolve(root, "artifacts/popup-save-window-0.17.9.png"),
   });
+  const currentBeforeSave = await popup.evaluate(async (windowId) => {
+    const data = (await chrome.runtime.sendMessage({ type: "load" })).value;
+    return data.sessions.find((binding) => binding.windowId === windowId)
+      ?.spaceId;
+  }, source.windowId);
+  assert(currentBeforeSave, "Source window has an Unsaved session");
+  const managerTab = await worker.evaluate(async (windowId) => {
+    const url = chrome.runtime.getURL("index.html");
+    const existing = (await chrome.tabs.query({ windowId })).find((tab) =>
+      tab.url?.startsWith(url),
+    );
+    return (
+      existing ??
+      (await chrome.tabs.create({ windowId, url, pinned: true, active: false }))
+    );
+  }, source.windowId);
+  let pinnedManager;
+  await expect
+    .poll(async () => {
+      for (const page of context
+        .pages()
+        .filter((p) => p.url().includes(`/index.html`))) {
+        const tabId = await page
+          .evaluate(async () => (await chrome.tabs.getCurrent())?.id)
+          .catch(() => undefined);
+        if (tabId === managerTab.id) {
+          pinnedManager = page;
+          return true;
+        }
+      }
+      return false;
+    })
+    .toBe(true);
+  await worker.evaluate(async (tabId) => {
+    await chrome.tabs.update(tabId, { pinned: true });
+  }, managerTab.id);
+  const documents = [];
+  for (const page of context
+    .pages()
+    .filter(
+      (p) => p.url().startsWith("https://popup.test/") || p === pinnedManager,
+    )) {
+    const marker = await page.evaluate(
+      () => (window.__saveWindowMarker = crypto.randomUUID()),
+    );
+    documents.push({ page, marker });
+  }
   // Changing focused window while the popup is open must not change its target.
   const other = await worker.evaluate(
     async () =>
@@ -404,15 +449,16 @@ try {
   );
   await popup.getByRole("button", { name: "Save Space", exact: true }).click();
   await expect(popup.locator(".popup-status")).toHaveText(
-    "Saved as Window copy.",
+    "Saved as Window saved in place.",
   );
   const copied = await popup.evaluate(
     async () => (await chrome.runtime.sendMessage({ type: "load" })).value,
   );
   const copiedSpace = copied.entities.find(
-    (item) => item.kind === "space" && item.name === "Window copy",
+    (item) => item.kind === "space" && item.name === "Window saved in place",
   );
   assert(copiedSpace && !copiedSpace.temporary);
+  assert.equal(copiedSpace.id, currentBeforeSave);
   assert.equal(copiedSpace.color, "orange");
   assert.equal(copiedSpace.sidebarId, collection.id);
   const copiedTabs = copied.entities.filter(
@@ -436,7 +482,37 @@ try {
   );
   assert.equal(copied.spaceTabs[copiedSpace.id].length, 3);
   assert(
-    !copied.sessions.some((session) => session.spaceId === copiedSpace.id),
+    copied.sessions.some(
+      (session) =>
+        session.spaceId === copiedSpace.id &&
+        session.windowId === source.windowId &&
+        !session.parked,
+    ),
+  );
+  assert(
+    copied.browser.tabs
+      .filter(
+        (tab) =>
+          tab.windowId === source.windowId &&
+          !tab.pinned &&
+          /^https?:/.test(tab.url),
+      )
+      .every((tab) => tab.spaceId === copiedSpace.id),
+  );
+  await expect
+    .poll(
+      () => pinnedManager.locator('link[rel="icon"]').getAttribute("href"),
+      { timeout: 3000 },
+    )
+    .toMatch(/icons\/spaces\/orange\/(light|dark)\/icon32\.png$/);
+  for (const { page, marker } of documents)
+    assert.equal(
+      await page.evaluate(() => window.__saveWindowMarker),
+      marker,
+      "Saving must preserve loaded documents, including the manager",
+    );
+  results.push(
+    "Popup promotes the same Unsaved ID, binds live tabs immediately, preserves document markers and updates the pinned manager favicon without reload",
   );
   assert.deepEqual(
     await worker.evaluate(
@@ -471,6 +547,16 @@ try {
     async () => (await chrome.runtime.sendMessage({ type: "load" })).value,
   );
   assert(!after.entities.some((item) => item.id === emptyCheck.spaceId));
+  // Explicitly close it now to test a later restore as well as the in-place save.
+  await popup.evaluate(async (spaceId) => {
+    const result = await chrome.runtime.sendMessage({
+      type: "browser",
+      commandId: crypto.randomUUID(),
+      action: "closeSession",
+      payload: { spaceId },
+    });
+    if (!result.ok) throw Error(result.error);
+  }, copiedSpace.id);
   await popup.evaluate(
     async ({ spaceId, sourceWindow }) => {
       const result = await chrome.runtime.sendMessage({
@@ -548,7 +634,7 @@ try {
   );
   assert.deepEqual(errors, []);
   results.push(
-    "Save window: named locked copy, source-window isolation, pinned sites, duplicates, groups/mute, untouched live tabs, empty-window rejection and actual reopening pass",
+    "Save window: in-place promotion, source-window isolation, pinned sites, duplicates, groups/mute, untouched live documents, empty-window rejection and later reopening pass",
   );
   const manager = await context.newPage();
   const managerErrors = [];

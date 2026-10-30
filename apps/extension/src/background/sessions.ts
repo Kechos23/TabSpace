@@ -628,7 +628,7 @@ export async function copyTabsToSpace(ids: number[], spaceId: string) {
   await capture(spaceId);
   await repo.db.meta.delete("session:operation");
 }
-// Save a closed copy, without adopting, moving or replacing any live tabs.
+// Promote this window in place. Never navigate, recreate or move its live tabs.
 export async function saveWindowAsSpace(
   windowId: number,
   spaceId: string,
@@ -640,6 +640,19 @@ export async function saveWindowAsSpace(
   const window = await chrome.windows.get(windowId);
   if (window.type !== "normal" || window.incognito)
     throw new Error("Use a normal Chrome window.");
+  if (await repo.db.meta.get("session:operation"))
+    throw new Error("Inspect the interrupted Space operation before saving.");
+  const bindings = await sessionStatus();
+  const binding = bindings.find((item) => item.windowId === windowId);
+  const priorSpace = binding
+    ? await repo.db.entities.get(binding.spaceId)
+    : undefined;
+  if (priorSpace && !priorSpace.deletedAt && !priorSpace.archivedAt) {
+    if (binding!.parked || !priorSpace.temporary)
+      throw new Error("This window already belongs to a Saved Space.");
+    // Keep notes, tasks, resources, occurrence IDs and manager navigation intact.
+    spaceId = priorSpace.id;
+  }
   const state = await live();
   const tabs = state.tabs
     .filter((tab) => {
@@ -665,26 +678,60 @@ export async function saveWindowAsSpace(
       group.windowId === windowId &&
       tabs.some((tab) => tab.groupId === group.id),
   );
-  const copies = groups.map((group) =>
-    entity("group", group.title, {
-      spaceId,
-      color: group.color,
-      collapsed: group.collapsed,
+  const copies = await Promise.all(
+    groups.map(async (group) => {
+      const previous =
+        group.spaceId === spaceId && group.logicalId
+          ? await repo.db.entities.get(group.logicalId)
+          : undefined;
+      return entity("group", group.title, {
+        ...(previous?.kind === "group" && !previous.deletedAt
+          ? {
+              ...previous,
+              revision: previous.revision + 1,
+              updatedAt: new Date().toISOString(),
+            }
+          : {}),
+        name: group.title,
+        spaceId,
+        color: group.color,
+        collapsed: group.collapsed,
+      });
     }),
   );
   const groupIds = new Map(
     groups.map((group, index) => [group.id, copies[index].id]),
   );
-  const records = tabs.map((tab, index) =>
-    entity("savedTab", tab.title, {
-      spaceId,
-      url: tab.url,
-      order: index,
-      muted: tab.muted,
-      locked,
-      // Pinned sites are copied as ordinary Space tabs; the live pins stay global.
-      pinned: false,
-      groupId: groupIds.get(tab.groupId),
+  const records = await Promise.all(
+    tabs.map(async (tab, index) => {
+      const previous = tab.recordId
+        ? await repo.db.entities.get(tab.recordId)
+        : undefined;
+      const reusable =
+        previous?.kind === "savedTab" &&
+        previous.spaceId === spaceId &&
+        !previous.deletedAt &&
+        !tab.pinned
+          ? previous
+          : undefined;
+      return entity("savedTab", tab.title, {
+        ...(reusable
+          ? {
+              ...reusable,
+              revision: reusable.revision + 1,
+              updatedAt: new Date().toISOString(),
+            }
+          : {}),
+        name: tab.title,
+        spaceId,
+        url: tab.url,
+        order: index,
+        muted: tab.muted,
+        locked,
+        // Pinned sites retain the existing saved-copy behavior; live pins stay global.
+        pinned: false,
+        groupId: groupIds.get(tab.groupId),
+      });
     }),
   );
   const snapshot = snapshotSchema.parse({
@@ -721,13 +768,29 @@ export async function saveWindowAsSpace(
       )
         throw new Error("Choose an available collection.");
     }
-    await repo.execute({
-      schemaVersion: 1,
-      commandId: crypto.randomUUID(),
-      type: "create",
-      entity: space,
-    });
-    await repo.db.entities.bulkAdd([...copies, ...records]);
+    if (priorSpace && priorSpace.id === spaceId)
+      await repo.execute({
+        schemaVersion: 1,
+        commandId: crypto.randomUUID(),
+        type: "update",
+        id: spaceId,
+        expectedRevision: priorSpace.revision,
+        patch: {
+          name: space.name,
+          temporary: false,
+          color,
+          sidebarId: collectionId,
+          browsingClosedAt: undefined,
+        },
+      });
+    else
+      await repo.execute({
+        schemaVersion: 1,
+        commandId: crypto.randomUUID(),
+        type: "create",
+        entity: space,
+      });
+    await repo.db.entities.bulkPut([...copies, ...records]);
     await repo.db.meta.put({
       id: checkpointKey(spaceId),
       value: {
@@ -738,7 +801,48 @@ export async function saveWindowAsSpace(
         ),
       },
     });
+    // Bind by physical tab occurrence, not URL (duplicates and global pins may match).
+    const byTab = new Map(tabs.map((tab, index) => [tab.id, records[index]]));
+    for (const tab of state.tabs.filter(
+      (tab) => tab.windowId === windowId && sessionTab(tab),
+    )) {
+      tab.spaceId = spaceId;
+      const record = byTab.get(tab.id);
+      if (record) {
+        tab.recordId = record.id;
+        tab.lockId = record.locked ? record.id : undefined;
+        await repo.db.meta.put({
+          id: `tab:${state.generation}:${tab.id}`,
+          value: record.id,
+        });
+      }
+    }
+    for (const group of state.groups) {
+      const logicalId = groupIds.get(group.id);
+      if (group.windowId === windowId && logicalId) {
+        group.spaceId = spaceId;
+        group.logicalId = logicalId;
+      }
+    }
+    await saveBindings(state);
+    await repo.db.meta.put({
+      id: registryKey,
+      value: {
+        generation: state.generation,
+        bindings: [
+          ...bindings.filter(
+            (item) => item.windowId !== windowId && item.spaceId !== spaceId,
+          ),
+          { windowId, spaceId, parked: false },
+        ],
+      },
+    });
   });
+  // The fast favicon listener can read the committed identity before maintenance/view hydration.
+  void chrome.runtime
+    .sendMessage({ type: "tabspace:iconChanged" })
+    .catch(() => undefined);
+  return spaceId;
 }
 const parkingUrl = (spaceId: string) =>
   chrome.runtime.getURL(`parking.html?space=${spaceId}`);
